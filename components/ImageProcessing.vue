@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="700">
+  <v-card>
     <v-card-title>Generate Image</v-card-title>
     <v-card-subtitle>Upload your own image to process</v-card-subtitle>
     <v-card-text>
