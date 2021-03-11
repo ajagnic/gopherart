@@ -19,3 +19,13 @@
     <image-processing />
   </v-card>
 </template>
+
+<script>
+export default {
+  head() {
+    return {
+      script: [{ src: 'js/instantiate_go.js' }],
+    }
+  },
+}
+</script>
