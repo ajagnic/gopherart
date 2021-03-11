@@ -1,5 +1,6 @@
 <template>
   <v-card>
+    <img :src="'data:image/jpeg;base64,' + dataURL" />
     <v-card-title>Generate Image</v-card-title>
     <v-card-subtitle>Upload your own image to process</v-card-subtitle>
     <v-card-text>
@@ -20,13 +21,17 @@
 export default {
   data: () => ({
     input: null,
+    dataURL: null,
   }),
 
   methods: {
     test() {
-      this.input.arrayBuffer().then((result) => {
-        const arr = new Int8Array(result)
-        console.log(arr)
+      this.input.arrayBuffer().then((blob) => {
+        const arrObj = new Int8Array(blob)
+        const arr = Object.values(arrObj)
+        const jsonArr = JSON.stringify(arr)
+        const jb = window.processImage(jsonArr)
+        this.dataURL = JSON.parse(jb)
       })
     },
   },
