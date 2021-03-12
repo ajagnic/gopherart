@@ -1,6 +1,5 @@
 <template>
   <v-card>
-    <img :src="'data:image/jpeg;base64,' + dataURL" />
     <v-card-title>Generate Image</v-card-title>
     <v-card-subtitle>Upload your own image to process</v-card-subtitle>
     <v-card-text>
@@ -12,8 +11,9 @@
       />
     </v-card-text>
     <v-card-actions>
-      <v-btn x-large block plain @click="test">Submit</v-btn>
+      <v-btn x-large block plain @click="processFile">Submit</v-btn>
     </v-card-actions>
+    <img v-if="dataURL != null" :src="dataURL" />
   </v-card>
 </template>
 
@@ -25,13 +25,12 @@ export default {
   }),
 
   methods: {
-    test() {
+    processFile() {
       this.input.arrayBuffer().then((blob) => {
-        const arrObj = new Int8Array(blob)
-        const arr = Object.values(arrObj)
-        const jsonArr = JSON.stringify(arr)
-        const jb = window.processImage(jsonArr)
-        this.dataURL = JSON.parse(jb)
+        const imgObj = new Int8Array(blob)
+        const img = Object.values(imgObj)
+        const img64 = window.processImage(JSON.stringify(img))
+        this.dataURL = 'data:image/jpeg;base64,' + JSON.parse(img64)
       })
     },
   },

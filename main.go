@@ -7,18 +7,16 @@ import (
 	"image/jpeg"
 	"syscall/js"
 
-	_ "github.com/ajagnic/gogenart/sketch"
+	"github.com/ajagnic/gogenart/sketch"
 )
 
 func main() {
-	fmt.Println("Go WASM")
 	js.Global().Set("processImage", js.FuncOf(processImage))
+
 	<-make(chan bool)
 }
 
 func processImage(this js.Value, args []js.Value) interface{} {
-	fmt.Println("processImage")
-
 	var values []int
 	err := json.Unmarshal([]byte(args[0].String()), &values)
 	if err != nil {
@@ -29,7 +27,6 @@ func processImage(this js.Value, args []js.Value) interface{} {
 	for _, v := range values {
 		b = append(b, byte(v))
 	}
-
 	rdr := bytes.NewBuffer(b)
 
 	img, err := jpeg.Decode(rdr)
@@ -37,15 +34,29 @@ func processImage(this js.Value, args []js.Value) interface{} {
 		fmt.Println(err)
 	}
 
-	err = jpeg.Encode(rdr, img, nil)
+	canvas := sketch.NewSketch(img, sketch.Params{
+		Iterations:         10000,
+		Width:              600,
+		Height:             600,
+		PolygonSidesMin:    3,
+		PolygonSidesMax:    5,
+		PolygonFillChance:  1.0,
+		PolygonColorChance: 0.0,
+		PolygonSizeRatio:   0.1,
+		PixelShake:         0.0,
+		Greyscale:          false,
+	})
+	canvas.Draw()
+
+	err = jpeg.Encode(rdr, canvas.Image(), nil)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	jb, err := json.Marshal(b)
+	out, err := json.Marshal(b)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	return string(jb)
+	return string(out)
 }
