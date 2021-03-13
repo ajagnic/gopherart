@@ -17,7 +17,7 @@
     </div>
     <div v-if="dataURL != null">
       <v-card-actions>
-        <v-btn>Advanced</v-btn>
+        <image-controls @update:params="params = $event" />
         <v-spacer />
         <v-btn @click="processFile">Generate</v-btn>
       </v-card-actions>
@@ -37,6 +37,18 @@ export default {
   data: () => ({
     input: null,
     dataURL: null,
+    params: {
+      iterations: 10000,
+      width: 600,
+      height: 600,
+      polygonSidesMin: 3,
+      polygonSidesMax: 5,
+      polygonFillChance: 1.0,
+      polygonColorChance: 0.0,
+      polygonSizeRatio: 0.1,
+      pixelShake: 0.0,
+      greyscale: false,
+    },
   }),
 
   methods: {
@@ -44,8 +56,10 @@ export default {
       this.input.arrayBuffer().then((blob) => {
         const imgObj = new Int8Array(blob)
         const img = Object.values(imgObj)
-        const img64 = window.processImage(JSON.stringify(img))
-        this.dataURL = 'data:image/jpeg;base64,' + JSON.parse(img64)
+        const imgStr = JSON.stringify(img)
+        const paramsStr = JSON.stringify(this.params)
+        const img64Str = window.processImage(imgStr, paramsStr)
+        this.dataURL = 'data:image/jpeg;base64,' + JSON.parse(img64Str)
       })
     },
   },
