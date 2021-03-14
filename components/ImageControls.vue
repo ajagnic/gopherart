@@ -68,24 +68,24 @@
 
 <script>
 export default {
+  props: {
+    values: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+
   data: () => ({
     min: 0.0,
     max: 1.0,
     step: 0.1,
     sides: [3, 5],
-    params: {
-      iterations: 10000,
-      width: 600,
-      height: 600,
-      polygonSidesMin: 3,
-      polygonSidesMax: 5,
-      polygonFillChance: 1.0,
-      polygonColorChance: 0.0,
-      polygonSizeRatio: 0.1,
-      pixelShake: 0.0,
-      greyscale: false,
-    },
+    params: {},
   }),
+
+  mounted() {
+    this.params = this.values
+  },
 
   methods: {
     setPolygonSides(val) {
