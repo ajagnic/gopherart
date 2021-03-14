@@ -17,7 +17,7 @@
     </div>
     <div v-if="dataURL != null">
       <v-card-actions>
-        <image-controls @update:params="params = $event" />
+        <image-controls :values.sync="params" />
         <v-spacer />
         <v-btn @click="processFile">Generate</v-btn>
       </v-card-actions>
@@ -53,13 +53,14 @@ export default {
 
   methods: {
     processFile() {
+      const enc = this.input.type
       this.input.arrayBuffer().then((blob) => {
         const imgObj = new Int8Array(blob)
         const img = Object.values(imgObj)
         const imgStr = JSON.stringify(img)
         const paramsStr = JSON.stringify(this.params)
         const img64Str = window.processImage(imgStr, paramsStr)
-        this.dataURL = 'data:image/jpeg;base64,' + JSON.parse(img64Str)
+        this.dataURL = 'data:' + enc + ';base64,' + JSON.parse(img64Str)
       })
     },
   },

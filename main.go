@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"image"
 	"image/jpeg"
+	"image/png"
 	"syscall/js"
 
 	"github.com/ajagnic/gogenart/sketch"
@@ -34,7 +36,7 @@ func processImage(this js.Value, args []js.Value) interface{} {
 	}
 	rdr := bytes.NewBuffer(b)
 
-	img, err := jpeg.Decode(rdr)
+	img, enc, err := image.Decode(rdr)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -42,9 +44,11 @@ func processImage(this js.Value, args []js.Value) interface{} {
 	canvas := sketch.NewSketch(img, params)
 	canvas.Draw()
 
-	err = jpeg.Encode(rdr, canvas.Image(), nil)
-	if err != nil {
-		fmt.Println(err)
+	switch enc {
+	case "png":
+		png.Encode(rdr, canvas.Image())
+	default:
+		jpeg.Encode(rdr, canvas.Image(), nil)
 	}
 
 	out, err := json.Marshal(b)
