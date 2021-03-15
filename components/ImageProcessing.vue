@@ -55,11 +55,10 @@ export default {
     processFile() {
       const enc = this.input.type
       this.input.arrayBuffer().then((blob) => {
-        const imgObj = new Int8Array(blob)
-        const img = Object.values(imgObj)
-        const imgStr = JSON.stringify(img)
+        const bytes = new Uint8Array(blob)
+        const size = bytes.byteLength
         const paramsStr = JSON.stringify(this.params)
-        const img64Str = window.processImage(imgStr, paramsStr)
+        const img64Str = window.processImage(bytes, size, paramsStr)
         this.dataURL = 'data:' + enc + ';base64,' + JSON.parse(img64Str)
       })
     },

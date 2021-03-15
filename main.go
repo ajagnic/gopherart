@@ -19,22 +19,19 @@ func main() {
 }
 
 func processImage(this js.Value, args []js.Value) interface{} {
-	var values []int
-	err := json.Unmarshal([]byte(args[0].String()), &values)
-	if err != nil {
-		fmt.Println(err)
-	}
+	b := args[0]
+	size := args[1].Int()
+	paramsJSON := []byte(args[2].String())
+
 	var params sketch.Params
-	err = json.Unmarshal([]byte(args[1].String()), &params)
+	err := json.Unmarshal(paramsJSON, &params)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	var b []byte
-	for _, v := range values {
-		b = append(b, byte(v))
-	}
-	rdr := bytes.NewBuffer(b)
+	buff := make([]byte, size)
+	js.CopyBytesToGo(buff, b)
+	rdr := bytes.NewBuffer(buff)
 
 	img, enc, err := image.Decode(rdr)
 	if err != nil {
@@ -51,7 +48,7 @@ func processImage(this js.Value, args []js.Value) interface{} {
 		jpeg.Encode(rdr, canvas.Image(), nil)
 	}
 
-	out, err := json.Marshal(b)
+	out, err := json.Marshal(buff)
 	if err != nil {
 		fmt.Println(err)
 	}
