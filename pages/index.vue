@@ -3,9 +3,7 @@
     <v-card-text>
       <v-row>
         <v-spacer />
-        <v-avatar size="200">
-          <img src="@/assets/avatar.jpg" />
-        </v-avatar>
+        <img src="@/assets/gopher.png" width="30%" />
         <v-spacer />
       </v-row>
     </v-card-text>
