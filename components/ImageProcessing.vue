@@ -1,19 +1,12 @@
 <template>
   <v-card>
     <div v-if="dataURL == null">
-      <v-card-title>Generate Image</v-card-title>
-      <v-card-subtitle>Upload your own image to process</v-card-subtitle>
-      <v-card-text>
-        <v-file-input
-          v-model="input"
-          hint="*.jpeg, *.png"
-          persistent-hint
-          accept="image/jpeg, image/png"
+      <v-container>
+        <image-upload
+          @file-drop="onDrop($event)"
+          @file-select="onSelect($event)"
         />
-      </v-card-text>
-      <v-card-actions>
-        <v-btn x-large block plain @click="processFile">Submit</v-btn>
-      </v-card-actions>
+      </v-container>
     </div>
     <div v-if="dataURL != null">
       <v-card-actions>
@@ -23,7 +16,7 @@
           <v-btn>Download</v-btn>
         </a>
         <v-spacer />
-        <v-btn @click="processFile">Generate</v-btn>
+        <v-btn @click="processFile" @mouseover="loading = true">Generate</v-btn>
       </v-card-actions>
       <v-card-text>
         <v-row>
@@ -65,6 +58,16 @@ export default {
         const img64Str = window.processImage(bytes, size, paramsStr)
         this.dataURL = 'data:' + enc + ';base64,' + JSON.parse(img64Str)
       })
+    },
+
+    onDrop(e) {
+      this.input = e.dataTransfer.files[0]
+      this.processFile()
+    },
+
+    onSelect(e) {
+      this.input = e
+      this.processFile()
     },
   },
 }
