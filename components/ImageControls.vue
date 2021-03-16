@@ -10,16 +10,6 @@
           label="Iterations"
           type="number"
         />
-        <v-text-field
-          v-model.number="params.width"
-          label="Width"
-          type="number"
-        />
-        <v-text-field
-          v-model.number="params.height"
-          label="Height"
-          type="number"
-        />
         <v-range-slider
           label="PolygonSides"
           thumb-label

@@ -19,6 +19,10 @@
       <v-card-actions>
         <image-controls :values.sync="params" />
         <v-spacer />
+        <a :href="dataURL" :download="filename">
+          <v-btn>Download</v-btn>
+        </a>
+        <v-spacer />
         <v-btn @click="processFile">Generate</v-btn>
       </v-card-actions>
       <v-card-text>
@@ -37,10 +41,9 @@ export default {
   data: () => ({
     input: null,
     dataURL: null,
+    filename: null,
     params: {
       iterations: 10000,
-      width: 600,
-      height: 600,
       polygonSidesMin: 3,
       polygonSidesMax: 5,
       polygonFillChance: 1.0,
@@ -53,6 +56,7 @@ export default {
 
   methods: {
     processFile() {
+      this.filename = 'gopherart-' + this.input.name
       const enc = this.input.type
       this.input.arrayBuffer().then((blob) => {
         const bytes = new Uint8Array(blob)
