@@ -2,29 +2,33 @@
   <v-card>
     <div v-if="dataURL == null">
       <v-container>
-        <image-upload
-          @file-drop="onDrop($event)"
-          @file-select="onSelect($event)"
-        />
+        <image-upload @file-upload="input = $event" />
       </v-container>
+      <v-card-actions>
+        <v-btn x-large block plain @click="processFile">Generate</v-btn>
+      </v-card-actions>
     </div>
     <div v-if="dataURL != null">
-      <v-card-actions>
-        <image-controls :values.sync="params" />
-        <v-spacer />
-        <a :href="dataURL" :download="filename">
-          <v-btn>Download</v-btn>
-        </a>
-        <v-spacer />
-        <v-btn @click="processFile" @mouseover="loading = true">Generate</v-btn>
-      </v-card-actions>
-      <v-card-text>
-        <v-row>
-          <v-spacer />
-          <img width="90%" :src="dataURL" />
-          <v-spacer />
-        </v-row>
-      </v-card-text>
+      <v-container>
+        <v-img :src="dataURL">
+          <image-controls :values.sync="params" />
+          <v-btn
+            class="top-fab"
+            x-large
+            fab
+            absolute
+            right
+            @click="processFile"
+          >
+            <v-icon>mdi-refresh</v-icon>
+          </v-btn>
+          <a :href="dataURL" :download="filename">
+            <v-btn class="bottom-fab" x-large fab absolute bottom right>
+              <v-icon>mdi-download</v-icon>
+            </v-btn>
+          </a>
+        </v-img>
+      </v-container>
     </div>
   </v-card>
 </template>
@@ -57,18 +61,19 @@ export default {
         const paramsStr = JSON.stringify(this.params)
         const img64Str = window.processImage(bytes, size, paramsStr)
         this.dataURL = 'data:' + enc + ';base64,' + JSON.parse(img64Str)
+        this.$emit('image-loaded', true)
       })
-    },
-
-    onDrop(e) {
-      this.input = e.dataTransfer.files[0]
-      this.processFile()
-    },
-
-    onSelect(e) {
-      this.input = e
-      this.processFile()
     },
   },
 }
 </script>
+
+<style>
+.bottom-fab {
+  margin-bottom: 50px;
+}
+
+.top-fab {
+  margin-top: 10px;
+}
+</style>

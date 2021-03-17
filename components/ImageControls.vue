@@ -1,7 +1,9 @@
 <template>
   <v-menu :close-on-content-click="false">
     <template #activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on">Advanced</v-btn>
+      <v-btn class="top-fab" x-large fab absolute left v-bind="attrs" v-on="on">
+        <v-icon>mdi-tune</v-icon>
+      </v-btn>
     </template>
     <v-card min-width="300" @mouseleave="$emit('update:params', params)">
       <v-card-text>
