@@ -1,37 +1,35 @@
 <template>
   <v-card>
     <div v-if="dataURL == null">
-      <v-card-title>Generate Image</v-card-title>
-      <v-card-subtitle>Upload your own image to process</v-card-subtitle>
-      <v-card-text>
-        <v-file-input
-          v-model="input"
-          hint="*.jpeg, *.png"
-          persistent-hint
-          accept="image/jpeg, image/png"
-        />
-      </v-card-text>
+      <v-container>
+        <image-upload @file-upload="input = $event" />
+      </v-container>
       <v-card-actions>
-        <v-btn x-large block plain @click="processFile">Submit</v-btn>
+        <v-btn x-large block plain @click="processFile">Generate</v-btn>
       </v-card-actions>
     </div>
     <div v-if="dataURL != null">
-      <v-card-actions>
-        <image-controls :values.sync="params" />
-        <v-spacer />
-        <a :href="dataURL" :download="filename">
-          <v-btn>Download</v-btn>
-        </a>
-        <v-spacer />
-        <v-btn @click="processFile">Generate</v-btn>
-      </v-card-actions>
-      <v-card-text>
-        <v-row>
-          <v-spacer />
-          <img width="90%" :src="dataURL" />
-          <v-spacer />
-        </v-row>
-      </v-card-text>
+      <v-container>
+        <v-img :src="dataURL">
+          <image-controls :values.sync="params" />
+          <v-btn class="top-fab" medium fab absolute right @click="processFile">
+            <v-icon>mdi-refresh</v-icon>
+          </v-btn>
+          <a :href="dataURL" :download="filename">
+            <v-btn
+              class="bottom-fab"
+              medium
+              fab
+              absolute
+              bottom
+              right
+              color="primary"
+            >
+              <v-icon color="black">mdi-download</v-icon>
+            </v-btn>
+          </a>
+        </v-img>
+      </v-container>
     </div>
   </v-card>
 </template>
@@ -64,8 +62,19 @@ export default {
         const paramsStr = JSON.stringify(this.params)
         const img64Str = window.processImage(bytes, size, paramsStr)
         this.dataURL = 'data:' + enc + ';base64,' + JSON.parse(img64Str)
+        this.$emit('image-loaded', true)
       })
     },
   },
 }
 </script>
+
+<style>
+.bottom-fab {
+  margin-bottom: 50px;
+}
+
+.top-fab {
+  margin-top: 10px;
+}
+</style>

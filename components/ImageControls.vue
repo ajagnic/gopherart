@@ -1,17 +1,25 @@
 <template>
-  <v-menu :close-on-content-click="false">
+  <v-menu
+    v-model="menu"
+    transition="scale-transition"
+    :close-on-content-click="false"
+  >
     <template #activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on">Advanced</v-btn>
+      <v-btn class="top-fab" medium fab absolute left v-bind="attrs" v-on="on">
+        <v-icon>mdi-tune-variant</v-icon>
+      </v-btn>
     </template>
-    <v-card min-width="300" @mouseleave="$emit('update:params', params)">
+    <v-card min-width="300" @mouseleave="updateParams">
       <v-card-text>
-        <v-text-field
-          v-model.number="params.iterations"
+        <v-slider
+          v-model="params.iterations"
           label="Iterations"
-          type="number"
+          min="1"
+          max="100000"
+          step="1000"
         />
         <v-range-slider
-          label="PolygonSides"
+          label="Sides"
           thumb-label
           min="2"
           max="20"
@@ -20,32 +28,28 @@
         />
         <v-slider
           v-model="params.polygonFillChance"
-          label="PolygonFill"
-          thumb-label
+          label="Fill"
           :min="min"
           :max="max"
           :step="step"
         />
         <v-slider
           v-model="params.polygonColorChance"
-          label="PolygonColor"
-          thumb-label
+          label="Color"
           :min="min"
           :max="max"
           :step="step"
         />
         <v-slider
           v-model="params.polygonSizeRatio"
-          label="PolygonSize"
-          thumb-label
-          :min="min"
+          label="Size"
+          min="0.01"
           :max="max"
           :step="step"
         />
         <v-slider
           v-model="params.pixelShake"
-          label="PixelShake"
-          thumb-label
+          label="Shake"
           :min="min"
           :max="max"
           :step="step"
@@ -66,9 +70,10 @@ export default {
   },
 
   data: () => ({
+    menu: false,
     min: 0.0,
     max: 1.0,
-    step: 0.1,
+    step: 0.05,
     sides: [3, 5],
     params: {},
   }),
@@ -81,6 +86,11 @@ export default {
     setPolygonSides(val) {
       this.params.polygonSidesMin = val[0]
       this.params.polygonSidesMax = val[1]
+    },
+
+    updateParams() {
+      this.menu = false
+      this.$emit('update:params', this.params)
     },
   },
 }

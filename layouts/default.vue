@@ -2,7 +2,9 @@
   <v-app>
     <v-app-bar shrink-on-scroll prominent app>
       <v-spacer />
-      <v-app-bar-title>gopherart.dev</v-app-bar-title>
+      <v-app-bar-title>
+        gopherart.<span class="primary--text text--accent-3">dev</span>
+      </v-app-bar-title>
     </v-app-bar>
     <v-main>
       <v-container fluid>
