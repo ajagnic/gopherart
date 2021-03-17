@@ -12,19 +12,20 @@
       <v-container>
         <v-img :src="dataURL">
           <image-controls :values.sync="params" />
-          <v-btn
-            class="top-fab"
-            x-large
-            fab
-            absolute
-            right
-            @click="processFile"
-          >
+          <v-btn class="top-fab" medium fab absolute right @click="processFile">
             <v-icon>mdi-refresh</v-icon>
           </v-btn>
           <a :href="dataURL" :download="filename">
-            <v-btn class="bottom-fab" x-large fab absolute bottom right>
-              <v-icon>mdi-download</v-icon>
+            <v-btn
+              class="bottom-fab"
+              medium
+              fab
+              absolute
+              bottom
+              right
+              color="primary"
+            >
+              <v-icon color="black">mdi-download</v-icon>
             </v-btn>
           </a>
         </v-img>
