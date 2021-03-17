@@ -7,7 +7,7 @@
         <v-card-text>
           <v-row>
             <v-spacer />
-            <img src="@/assets/logo.png" width="25%" />
+            <img src="@/assets/gopher.png" width="25%" />
             <v-spacer />
           </v-row>
         </v-card-text>

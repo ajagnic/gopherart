@@ -11,10 +11,12 @@
     </template>
     <v-card min-width="300" @mouseleave="updateParams">
       <v-card-text>
-        <v-text-field
-          v-model.number="params.iterations"
-          prefix="Iterations: "
-          outlined
+        <v-slider
+          v-model="params.iterations"
+          label="Iterations"
+          min="1"
+          max="100000"
+          step="1000"
         />
         <v-range-slider
           label="Sides"
@@ -27,7 +29,6 @@
         <v-slider
           v-model="params.polygonFillChance"
           label="Fill"
-          thumb-label
           :min="min"
           :max="max"
           :step="step"
@@ -35,7 +36,6 @@
         <v-slider
           v-model="params.polygonColorChance"
           label="Color"
-          thumb-label
           :min="min"
           :max="max"
           :step="step"
@@ -43,15 +43,13 @@
         <v-slider
           v-model="params.polygonSizeRatio"
           label="Size"
-          thumb-label
-          :min="0.01"
+          min="0.01"
           :max="max"
           :step="step"
         />
         <v-slider
           v-model="params.pixelShake"
           label="Shake"
-          thumb-label
           :min="min"
           :max="max"
           :step="step"
