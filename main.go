@@ -40,15 +40,17 @@ func processImage(this js.Value, args []js.Value) interface{} {
 
 	canvas := sketch.NewSketch(img, params)
 	canvas.Draw()
+	newImg := canvas.Image()
 
+	rdr.Reset()
 	switch enc {
 	case "png":
-		png.Encode(rdr, canvas.Image())
+		png.Encode(rdr, newImg)
 	default:
-		jpeg.Encode(rdr, canvas.Image(), nil)
+		jpeg.Encode(rdr, newImg, nil)
 	}
 
-	out, err := json.Marshal(buff)
+	out, err := json.Marshal(rdr.Bytes())
 	if err != nil {
 		fmt.Println(err)
 	}
