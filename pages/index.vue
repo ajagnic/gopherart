@@ -1,13 +1,11 @@
 <template>
   <div>
-    <br />
-    <br />
     <v-card class="mx-auto" max-width="700">
       <div v-if="!imageLoaded">
         <v-card-text>
           <v-row>
             <v-spacer />
-            <img src="@/assets/logo.png" width="25%" />
+            <img src="@/assets/logo.png" width="20%" />
             <v-spacer />
           </v-row>
         </v-card-text>

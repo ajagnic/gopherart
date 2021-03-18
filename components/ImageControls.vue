@@ -9,7 +9,7 @@
         <v-icon>mdi-tune-variant</v-icon>
       </v-btn>
     </template>
-    <v-card min-width="300" @mouseleave="updateParams">
+    <v-card @mouseleave="updateParams">
       <v-card-text>
         <v-text-field
           v-model.number="params.iterations"
