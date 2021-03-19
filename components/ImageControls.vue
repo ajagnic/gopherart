@@ -9,14 +9,13 @@
         <v-icon>mdi-tune-variant</v-icon>
       </v-btn>
     </template>
-    <v-card min-width="300" @mouseleave="updateParams">
+    <v-card @mouseleave="updateParams">
       <v-card-text>
-        <v-slider
-          v-model="params.iterations"
-          label="Iterations"
-          min="1"
-          max="100000"
-          step="1000"
+        <v-text-field
+          v-model.number="params.iterations"
+          suffix="iterations"
+          hint="High iterations may slow down your browser"
+          outlined
         />
         <v-range-slider
           label="Sides"

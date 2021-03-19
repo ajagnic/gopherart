@@ -5,7 +5,15 @@
         <image-upload @file-upload="input = $event" />
       </v-container>
       <v-card-actions>
-        <v-btn x-large block plain @click="processFile">Generate</v-btn>
+        <v-btn
+          x-large
+          block
+          plain
+          :disabled="input === null"
+          @click="processFile"
+        >
+          Generate
+        </v-btn>
       </v-card-actions>
     </div>
     <div v-if="dataURL != null">

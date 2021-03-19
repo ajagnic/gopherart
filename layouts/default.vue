@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar shrink-on-scroll prominent app>
+    <v-app-bar shrink-on-scroll dense app>
       <v-spacer />
       <v-app-bar-title>
         gopherart.<span class="primary--text text--accent-3">dev</span>
