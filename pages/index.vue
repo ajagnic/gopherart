@@ -36,6 +36,7 @@ export default {
 
   head() {
     return {
+      title: 'home',
       script: [{ src: 'js/instantiate_go.js' }],
     }
   },

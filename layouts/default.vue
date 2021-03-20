@@ -15,8 +15,8 @@
 </template>
 
 <style scoped>
-.v-main {
+.container {
   background-image: url('~assets/background.jpg');
-  height: 100vh;
+  height: 100%;
 }
 </style>
