@@ -18,28 +18,36 @@
     </div>
     <div v-if="dataURL != null">
       <v-container>
-        <v-btn id="close" small fab absolute top right @click="closeProcessing">
+        <v-btn class="top-fab" small fab absolute top left @click="processFile">
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
+        <image-controls :values.sync="params" />
+        <v-btn
+          id="close-btn"
+          class="top-fab"
+          small
+          fab
+          absolute
+          top
+          right
+          @click="closeProcessing"
+        >
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-img :src="dataURL">
-          <image-controls :values.sync="params" />
-          <v-btn class="top-fab" small fab absolute right @click="processFile">
-            <v-icon>mdi-refresh</v-icon>
+        <a :href="dataURL" :download="filename">
+          <v-btn
+            id="download-btn"
+            small
+            fab
+            absolute
+            bottom
+            right
+            color="primary"
+          >
+            <v-icon color="black">mdi-download</v-icon>
           </v-btn>
-          <a :href="dataURL" :download="filename">
-            <v-btn
-              class="bottom-fab"
-              small
-              fab
-              absolute
-              bottom
-              right
-              color="primary"
-            >
-              <v-icon color="black">mdi-download</v-icon>
-            </v-btn>
-          </a>
-        </v-img>
+        </a>
+        <img width="100%" height="100%" :src="dataURL" />
       </v-container>
     </div>
   </v-card>
@@ -86,16 +94,20 @@ export default {
 </script>
 
 <style>
-.bottom-fab {
-  margin-bottom: 50px;
-}
-
 .top-fab {
   margin-top: 10px;
 }
 
-#close {
+#close-btn {
   right: -10px;
-  margin-top: 10px;
+}
+
+#ctrl-btn {
+  margin-left: 50px;
+}
+
+#download-btn {
+  margin-bottom: 10px;
+  right: -10px;
 }
 </style>

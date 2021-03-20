@@ -5,7 +5,17 @@
     :close-on-content-click="false"
   >
     <template #activator="{ on, attrs }">
-      <v-btn class="top-fab" medium fab absolute left v-bind="attrs" v-on="on">
+      <v-btn
+        id="ctrl-btn"
+        class="top-fab"
+        small
+        fab
+        absolute
+        top
+        left
+        v-bind="attrs"
+        v-on="on"
+      >
         <v-icon>mdi-tune-variant</v-icon>
       </v-btn>
     </template>
