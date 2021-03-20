@@ -22,6 +22,20 @@
           <v-icon>mdi-refresh</v-icon>
         </v-btn>
         <image-controls :values.sync="params" />
+        <a :href="dataURL" :download="filename">
+          <v-btn
+            id="download-btn"
+            class="top-fab"
+            small
+            fab
+            absolute
+            top
+            right
+            color="primary"
+          >
+            <v-icon color="black">mdi-download</v-icon>
+          </v-btn>
+        </a>
         <v-btn
           id="close-btn"
           class="top-fab"
@@ -34,19 +48,6 @@
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <a :href="dataURL" :download="filename">
-          <v-btn
-            id="download-btn"
-            small
-            fab
-            absolute
-            bottom
-            right
-            color="primary"
-          >
-            <v-icon color="black">mdi-download</v-icon>
-          </v-btn>
-        </a>
         <img width="100%" height="100%" :src="dataURL" />
       </v-container>
     </div>
@@ -99,7 +100,7 @@ export default {
 }
 
 #close-btn {
-  right: -10px;
+  right: 15px;
 }
 
 #ctrl-btn {
@@ -107,7 +108,6 @@ export default {
 }
 
 #download-btn {
-  margin-bottom: 10px;
-  right: -10px;
+  right: 65px;
 }
 </style>

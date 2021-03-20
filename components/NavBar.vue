@@ -1,7 +1,10 @@
 <template>
   <div>
-    <v-app-bar dense app>
-      <v-app-bar-nav-icon @click="drawer = !drawer" />
+    <v-app-bar :collapse="collapse" dense app>
+      <!-- <v-app-bar-nav-icon @click="drawer = !drawer" /> -->
+      <v-btn icon @click="collapse = !collapse">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
       <v-spacer />
       <v-app-bar-title>
         gopherart.<span class="primary--text text--accent-3">dev</span>
@@ -30,6 +33,7 @@
 <script>
 export default {
   data: () => ({
+    collapse: false,
     drawer: false,
     pages: [{ title: 'Home', icon: 'mdi-home', link: '/' }],
   }),
