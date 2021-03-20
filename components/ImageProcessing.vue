@@ -18,15 +18,18 @@
     </div>
     <div v-if="dataURL != null">
       <v-container>
+        <v-btn id="close" small fab absolute top right @click="closeProcessing">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
         <v-img :src="dataURL">
           <image-controls :values.sync="params" />
-          <v-btn class="top-fab" medium fab absolute right @click="processFile">
+          <v-btn class="top-fab" small fab absolute right @click="processFile">
             <v-icon>mdi-refresh</v-icon>
           </v-btn>
           <a :href="dataURL" :download="filename">
             <v-btn
               class="bottom-fab"
-              medium
+              small
               fab
               absolute
               bottom
@@ -73,6 +76,11 @@ export default {
         this.$emit('image-loaded', true)
       })
     },
+
+    closeProcessing() {
+      this.dataURL = null
+      this.$emit('image-close', true)
+    },
   },
 }
 </script>
@@ -83,6 +91,11 @@ export default {
 }
 
 .top-fab {
+  margin-top: 10px;
+}
+
+#close {
+  right: -10px;
   margin-top: 10px;
 }
 </style>

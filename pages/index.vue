@@ -1,5 +1,6 @@
 <template>
   <div>
+    <br />
     <v-card class="mx-auto" max-width="600">
       <div v-if="!imageLoaded">
         <v-card-text>
@@ -19,7 +20,10 @@
           </v-row>
         </v-card-text>
       </div>
-      <image-processing @image-loaded="imageLoaded = true" />
+      <image-processing
+        @image-loaded="imageLoaded = true"
+        @image-close="imageLoaded = false"
+      />
     </v-card>
   </div>
 </template>
