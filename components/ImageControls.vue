@@ -16,7 +16,7 @@
         v-bind="attrs"
         v-on="on"
       >
-        <v-icon>mdi-tune-variant</v-icon>
+        <v-icon>mdi-tune</v-icon>
       </v-btn>
     </template>
     <v-card @mouseleave="updateParams">

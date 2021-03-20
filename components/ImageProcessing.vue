@@ -18,22 +18,22 @@
     </div>
     <div v-if="dataURL != null">
       <v-container>
-        <v-btn class="top-fab" small fab absolute top left @click="processFile">
-          <v-icon>mdi-refresh</v-icon>
+        <v-btn
+          class="top-fab"
+          small
+          fab
+          absolute
+          top
+          left
+          color="primary"
+          @click="processFile"
+        >
+          <v-icon color="black">mdi-refresh</v-icon>
         </v-btn>
         <image-controls :values.sync="params" />
         <a :href="dataURL" :download="filename">
-          <v-btn
-            id="download-btn"
-            class="top-fab"
-            small
-            fab
-            absolute
-            top
-            right
-            color="primary"
-          >
-            <v-icon color="black">mdi-download</v-icon>
+          <v-btn id="download-btn" class="top-fab" small fab absolute top right>
+            <v-icon>mdi-download</v-icon>
           </v-btn>
         </a>
         <v-btn

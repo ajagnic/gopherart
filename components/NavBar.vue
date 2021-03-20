@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar dense app>
+    <v-app-bar hide-on-scroll dense app>
       <!-- <v-app-bar-nav-icon @click="drawer = !drawer" /> -->
       <v-spacer />
       <v-app-bar-title>
