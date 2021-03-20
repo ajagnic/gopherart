@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="700">
+    <v-card class="mx-auto" max-width="600">
       <div v-if="!imageLoaded">
         <v-card-text>
           <v-row>
