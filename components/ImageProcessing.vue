@@ -62,6 +62,8 @@ export default {
     filename: null,
     params: {
       iterations: 10000,
+      width: 0,
+      height: 0,
       polygonSidesMin: 3,
       polygonSidesMax: 5,
       polygonFillChance: 1.0,

@@ -19,7 +19,7 @@
         <v-icon>mdi-tune</v-icon>
       </v-btn>
     </template>
-    <v-card @mouseleave="updateParams">
+    <v-card max-width="300" @mouseleave="updateParams">
       <v-card-text>
         <v-text-field
           v-model.number="params.iterations"
@@ -27,6 +27,22 @@
           hint="High iterations may slow down your browser"
           outlined
         />
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model.number="params.width"
+              prefix="Width:"
+              outlined
+            />
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model.number="params.height"
+              prefix="Height:"
+              outlined
+            />
+          </v-col>
+        </v-row>
         <v-range-slider
           label="Sides"
           thumb-label
