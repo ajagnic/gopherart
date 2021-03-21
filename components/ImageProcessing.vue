@@ -18,25 +18,37 @@
     </div>
     <div v-if="dataURL != null">
       <v-container>
-        <v-img :src="dataURL">
-          <image-controls :values.sync="params" />
-          <v-btn class="top-fab" medium fab absolute right @click="processFile">
-            <v-icon>mdi-refresh</v-icon>
+        <v-btn
+          class="top-fab"
+          small
+          fab
+          absolute
+          top
+          left
+          color="primary"
+          @click="processFile"
+        >
+          <v-icon color="black">mdi-refresh</v-icon>
+        </v-btn>
+        <image-controls :values.sync="params" />
+        <a :href="dataURL" :download="filename">
+          <v-btn id="download-btn" class="top-fab" small fab absolute top right>
+            <v-icon>mdi-download</v-icon>
           </v-btn>
-          <a :href="dataURL" :download="filename">
-            <v-btn
-              class="bottom-fab"
-              medium
-              fab
-              absolute
-              bottom
-              right
-              color="primary"
-            >
-              <v-icon color="black">mdi-download</v-icon>
-            </v-btn>
-          </a>
-        </v-img>
+        </a>
+        <v-btn
+          id="close-btn"
+          class="top-fab"
+          small
+          fab
+          absolute
+          top
+          right
+          @click="closeProcessing"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <img width="100%" height="100%" :src="dataURL" />
       </v-container>
     </div>
   </v-card>
@@ -50,6 +62,8 @@ export default {
     filename: null,
     params: {
       iterations: 10000,
+      width: 0,
+      height: 0,
       polygonSidesMin: 3,
       polygonSidesMax: 5,
       polygonFillChance: 1.0,
@@ -73,16 +87,29 @@ export default {
         this.$emit('image-loaded', true)
       })
     },
+
+    closeProcessing() {
+      this.dataURL = null
+      this.$emit('image-close', true)
+    },
   },
 }
 </script>
 
 <style>
-.bottom-fab {
-  margin-bottom: 50px;
-}
-
 .top-fab {
   margin-top: 10px;
+}
+
+#close-btn {
+  right: 15px;
+}
+
+#ctrl-btn {
+  margin-left: 50px;
+}
+
+#download-btn {
+  right: 65px;
 }
 </style>

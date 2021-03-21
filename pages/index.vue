@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="700">
+    <br />
+    <v-card class="mx-auto" max-width="600">
       <div v-if="!imageLoaded">
         <v-card-text>
           <v-row>
@@ -19,7 +20,10 @@
           </v-row>
         </v-card-text>
       </div>
-      <image-processing @image-loaded="imageLoaded = true" />
+      <image-processing
+        @image-loaded="imageLoaded = true"
+        @image-close="imageLoaded = false"
+      />
     </v-card>
   </div>
 </template>
@@ -32,6 +36,7 @@ export default {
 
   head() {
     return {
+      title: 'home',
       script: [{ src: 'js/instantiate_go.js' }],
     }
   },
