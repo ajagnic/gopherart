@@ -103,5 +103,6 @@ export default {
 <style scoped>
 #dropper {
   outline-style: dashed;
+  background: rgba(50, 50, 50, 0.5);
 }
 </style>

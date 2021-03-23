@@ -1,29 +1,46 @@
 <template>
   <div>
     <br />
-    <v-card class="mx-auto" max-width="600">
+    <v-card id="main-card" class="mx-auto" max-width="600">
       <div v-if="!imageLoaded">
-        <v-card-text>
-          <v-row>
-            <v-spacer />
-            <div id="scaler">
-              <div id="logo"></div>
-            </div>
-            <v-spacer />
-          </v-row>
-        </v-card-text>
-        <v-card-text>
-          <v-row>
-            <v-spacer />
-            <p>Welcome to gopherart.dev!<br /></p>
-            <v-spacer />
-          </v-row>
-        </v-card-text>
+        <div v-if="!showProcessing">
+          <v-card-text>
+            <v-row>
+              <v-spacer />
+              <div id="scaler">
+                <div id="spinner"></div>
+              </div>
+              <v-spacer />
+            </v-row>
+          </v-card-text>
+          <v-card-text class="text-center">
+            <p>
+              Welcome to gopherart.dev!<br />
+              This site uses Go WebAssembly<br />
+              to perform image processing in your browser.
+            </p>
+          </v-card-text>
+        </div>
+        <v-card-actions v-if="!showProcessing">
+          <v-btn
+            large
+            block
+            text
+            outlined
+            color="primary"
+            @click="showProcessing = true"
+          >
+            Generate Image
+          </v-btn>
+        </v-card-actions>
       </div>
-      <image-processing
-        @image-loaded="imageLoaded = true"
-        @image-close="imageLoaded = false"
-      />
+      <v-fade-transition>
+        <image-processing
+          v-show="showProcessing"
+          @image-loaded="imageLoaded = true"
+          @image-close="imageLoaded = false"
+        />
+      </v-fade-transition>
     </v-card>
   </div>
 </template>
@@ -31,6 +48,7 @@
 <script>
 export default {
   data: () => ({
+    showProcessing: false,
     imageLoaded: false,
   }),
 
@@ -44,7 +62,11 @@ export default {
 </script>
 
 <style scoped>
-#logo {
+#main-card {
+  background: transparent;
+}
+
+#spinner {
   width: 150px;
   height: 150px;
   background: url('~assets/logo.png');
