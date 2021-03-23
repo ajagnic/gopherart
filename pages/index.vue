@@ -1,7 +1,7 @@
 <template>
   <div>
     <br />
-    <v-card id="main-card" class="mx-auto" max-width="600">
+    <v-card id="main-card" class="mx-auto" max-width="600" :loading="loading">
       <div v-if="!imageLoaded">
         <div v-if="!showProcessing">
           <v-card-text>
@@ -19,8 +19,6 @@
               Perform artistic image-processing<br />
               in your browser, using<br />
               Go and Web Assembly.
-              <!-- This site uses Go WebAssembly<br />
-              to perform image processing in your browser. -->
             </p>
           </v-card-text>
         </div>
@@ -40,7 +38,8 @@
       <v-fade-transition>
         <image-processing
           v-show="showProcessing"
-          @image-loaded="imageLoaded = true"
+          @image-loaded="loaded"
+          @image-loading="loading = true"
           @image-close="imageLoaded = false"
         />
       </v-fade-transition>
@@ -51,6 +50,7 @@
 <script>
 export default {
   data: () => ({
+    loading: false,
     showProcessing: false,
     imageLoaded: false,
   }),
@@ -58,8 +58,14 @@ export default {
   head() {
     return {
       title: 'home',
-      script: [{ src: 'js/instantiate_go.js' }],
     }
+  },
+
+  methods: {
+    loaded() {
+      this.loading = false
+      this.imageLoaded = true
+    },
   },
 }
 </script>
