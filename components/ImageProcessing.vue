@@ -4,7 +4,7 @@
       <div v-if="dataURL == null">
         <v-card-title>Generate Image</v-card-title>
         <v-card-subtitle>
-          Upload a JPEG or PNG image below to process
+          Upload a JPEG or PNG image below to begin
         </v-card-subtitle>
         <v-container>
           <image-upload @file-upload="input = $event" />
@@ -92,6 +92,7 @@ export default {
 
   methods: {
     processFile() {
+      this.$nuxt.$loading.start()
       this.filename = 'gopherart-' + this.input.name
       const enc = this.input.type
       this.input.arrayBuffer().then((blob) => {
@@ -100,6 +101,7 @@ export default {
         const paramsStr = JSON.stringify(this.params)
         const img64Str = window.processImage(bytes, size, paramsStr)
         this.dataURL = 'data:' + enc + ';base64,' + JSON.parse(img64Str)
+        this.$nuxt.$loading.finish()
         this.$emit('image-loaded', true)
       })
     },

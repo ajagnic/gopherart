@@ -16,8 +16,11 @@
           <v-card-text class="text-center">
             <p>
               Welcome to gopherart.dev!<br />
-              This site uses Go WebAssembly<br />
-              to perform image processing in your browser.
+              Perform artistic image-processing<br />
+              in your browser, using<br />
+              Go and Web Assembly.
+              <!-- This site uses Go WebAssembly<br />
+              to perform image processing in your browser. -->
             </p>
           </v-card-text>
         </div>
@@ -30,7 +33,7 @@
             color="primary"
             @click="showProcessing = true"
           >
-            Generate Image
+            Upload Image
           </v-btn>
         </v-card-actions>
       </div>

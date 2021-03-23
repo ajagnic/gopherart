@@ -20,6 +20,8 @@ export default {
     script: [{ src: 'js/wasm_exec.js' }],
   },
 
+  loading: '~/components/Loading.vue',
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
