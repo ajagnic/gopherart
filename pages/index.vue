@@ -1,7 +1,7 @@
 <template>
   <div>
     <br />
-    <v-card id="main-card" class="mx-auto" max-width="600" :loading="loading">
+    <v-card id="main-card" class="mx-auto" max-width="600">
       <div v-if="!imageLoaded">
         <div v-if="!showProcessing">
           <v-card-text>
@@ -38,8 +38,7 @@
       <v-fade-transition>
         <image-processing
           v-show="showProcessing"
-          @image-loaded="loaded"
-          @image-loading="loading = true"
+          @image-loaded="imageLoaded = true"
           @image-close="imageLoaded = false"
         />
       </v-fade-transition>
@@ -50,7 +49,6 @@
 <script>
 export default {
   data: () => ({
-    loading: false,
     showProcessing: false,
     imageLoaded: false,
   }),
@@ -59,13 +57,6 @@ export default {
     return {
       title: 'home',
     }
-  },
-
-  methods: {
-    loaded() {
-      this.loading = false
-      this.imageLoaded = true
-    },
   },
 }
 </script>

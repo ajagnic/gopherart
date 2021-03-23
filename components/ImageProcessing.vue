@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-progress-linear :active="loading" rounded indeterminate />
     <v-card>
       <div v-if="dataURL == null">
         <v-card-title>Generate Image</v-card-title>
@@ -102,7 +103,6 @@ export default {
   methods: {
     processFile() {
       this.loading = true
-      this.$emit('image-loading', true)
       this.filename = 'gopherart-' + this.input.name
       this.enc = this.input.type
       this.input.arrayBuffer().then((blob) => {
