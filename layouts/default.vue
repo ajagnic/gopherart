@@ -16,7 +16,8 @@
 
 <style scoped>
 .container {
-  background-image: url('~assets/background.jpg');
+  background-image: url('~assets/background.jpeg');
   height: 100%;
+  width: 100vw;
 }
 </style>

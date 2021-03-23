@@ -1,57 +1,73 @@
 <template>
-  <v-card>
-    <div v-if="dataURL == null">
-      <v-container>
-        <image-upload @file-upload="input = $event" />
-      </v-container>
-      <v-card-actions>
-        <v-btn
-          x-large
-          block
-          plain
-          :disabled="input === null"
-          @click="processFile"
-        >
-          Generate
-        </v-btn>
-      </v-card-actions>
-    </div>
-    <div v-if="dataURL != null">
-      <v-container>
-        <v-btn
-          class="top-fab"
-          small
-          fab
-          absolute
-          top
-          left
-          color="primary"
-          @click="processFile"
-        >
-          <v-icon color="black">mdi-refresh</v-icon>
-        </v-btn>
-        <image-controls :values.sync="params" />
-        <a :href="dataURL" :download="filename">
-          <v-btn id="download-btn" class="top-fab" small fab absolute top right>
-            <v-icon>mdi-download</v-icon>
+  <div>
+    <v-card>
+      <div v-if="dataURL == null">
+        <v-card-title>Generate Image</v-card-title>
+        <v-card-subtitle>
+          Upload a JPEG or PNG image below to process
+        </v-card-subtitle>
+        <v-container>
+          <image-upload @file-upload="input = $event" />
+        </v-container>
+        <v-card-actions>
+          <v-btn
+            x-large
+            block
+            plain
+            :disabled="input === null"
+            @click="processFile"
+          >
+            Generate
           </v-btn>
-        </a>
-        <v-btn
-          id="close-btn"
-          class="top-fab"
-          small
-          fab
-          absolute
-          top
-          right
-          @click="closeProcessing"
-        >
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-        <img width="100%" height="100%" :src="dataURL" />
-      </v-container>
-    </div>
-  </v-card>
+        </v-card-actions>
+      </div>
+    </v-card>
+    <v-fade-transition hide-on-leave>
+      <v-card v-show="dataURL != null">
+        <v-container>
+          <v-btn
+            class="top-fab"
+            small
+            fab
+            absolute
+            top
+            left
+            color="primary"
+            @click="processFile"
+          >
+            <v-icon color="black">mdi-refresh</v-icon>
+          </v-btn>
+          <image-controls :values.sync="params" />
+          <a :href="dataURL" :download="filename">
+            <v-btn
+              id="download-btn"
+              class="top-fab"
+              small
+              fab
+              absolute
+              top
+              right
+            >
+              <v-icon>mdi-download</v-icon>
+            </v-btn>
+          </a>
+          <v-btn
+            id="close-btn"
+            class="top-fab"
+            small
+            fab
+            absolute
+            top
+            right
+            @click="closeProcessing"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <img width="100%" height="100%" :src="dataURL" />
+        </v-container>
+      </v-card>
+    </v-fade-transition>
+  </div>
 </template>
 
 <script>
@@ -89,6 +105,7 @@ export default {
     },
 
     closeProcessing() {
+      this.input = null
       this.dataURL = null
       this.$emit('image-close', true)
     },

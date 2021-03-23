@@ -2,6 +2,7 @@
   <v-menu
     v-model="menu"
     transition="scale-transition"
+    max-height="75%"
     :close-on-content-click="false"
   >
     <template #activator="{ on, attrs }">
