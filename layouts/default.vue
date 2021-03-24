@@ -6,7 +6,7 @@
         <nuxt />
       </v-container>
     </v-main>
-    <v-footer app>
+    <v-footer padless app>
       <v-spacer />
       {{ new Date().getFullYear() }} - Adrian Agnic
       <v-spacer />
@@ -15,7 +15,7 @@
 </template>
 
 <style scoped>
-.container {
+.v-main {
   background-image: url('~assets/background.jpeg');
   height: 100%;
   width: 100vw;

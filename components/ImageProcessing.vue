@@ -65,7 +65,10 @@
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <img width="100%" height="100%" :src="dataURL" />
+          <div
+            class="image"
+            :style="{ backgroundImage: 'url(' + dataURL + ')' }"
+          />
         </v-container>
       </v-card>
     </v-fade-transition>
@@ -129,6 +132,14 @@ export default {
 </script>
 
 <style>
+div.image {
+  height: 500px;
+  max-height: 80vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .top-fab {
   margin-top: 10px;
 }
