@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-progress-linear :active="loading" rounded indeterminate />
     <v-card>
       <div v-if="dataURL == null">
         <v-card-title>Generate Image</v-card-title>
@@ -15,6 +16,7 @@
             block
             plain
             :disabled="input === null"
+            :loading="loading"
             @click="processFile"
           >
             Generate
@@ -76,6 +78,9 @@ export default {
     input: null,
     dataURL: null,
     filename: null,
+    enc: null,
+    worker: null,
+    loading: false,
     params: {
       iterations: 10000,
       width: 0,
@@ -90,20 +95,28 @@ export default {
     },
   }),
 
+  mounted() {
+    this.worker = new Worker('js/go_worker.js')
+    this.worker.addEventListener('message', this.receiveImage)
+  },
+
   methods: {
     processFile() {
-      this.$nuxt.$loading.start()
+      this.loading = true
       this.filename = 'gopherart-' + this.input.name
-      const enc = this.input.type
+      this.enc = this.input.type
       this.input.arrayBuffer().then((blob) => {
         const bytes = new Uint8Array(blob)
         const size = bytes.byteLength
         const paramsStr = JSON.stringify(this.params)
-        const img64Str = window.processImage(bytes, size, paramsStr)
-        this.dataURL = 'data:' + enc + ';base64,' + JSON.parse(img64Str)
-        this.$nuxt.$loading.finish()
-        this.$emit('image-loaded', true)
+        this.worker.postMessage({ b: bytes, len: size, opt: paramsStr })
       })
+    },
+
+    receiveImage(e) {
+      this.loading = false
+      this.dataURL = 'data:' + this.enc + ';base64,' + JSON.parse(e.data)
+      this.$emit('image-loaded', true)
     },
 
     closeProcessing() {

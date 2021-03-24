@@ -19,8 +19,6 @@
               Perform artistic image-processing<br />
               in your browser, using<br />
               Go and Web Assembly.
-              <!-- This site uses Go WebAssembly<br />
-              to perform image processing in your browser. -->
             </p>
           </v-card-text>
         </div>
@@ -58,7 +56,6 @@ export default {
   head() {
     return {
       title: 'home',
-      script: [{ src: 'js/instantiate_go.js' }],
     }
   },
 }

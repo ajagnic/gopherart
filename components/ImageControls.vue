@@ -28,7 +28,7 @@
           hint="High iterations may slow down your browser"
           outlined
         />
-        <v-row>
+        <!-- <v-row>
           <v-col>
             <v-text-field
               v-model.number="params.width"
@@ -43,7 +43,7 @@
               outlined
             />
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-range-slider
           label="Sides"
           thumb-label
@@ -80,6 +80,27 @@
           :max="max"
           :step="step"
         />
+        <v-btn v-if="!showWH" block @click="showWH = true">
+          Set Width/Height
+        </v-btn>
+        <div v-else>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model.number="params.width"
+                prefix="Width:"
+                outlined
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model.number="params.height"
+                prefix="Height:"
+                outlined
+              />
+            </v-col>
+          </v-row>
+        </div>
         <v-switch v-model="params.greyscale" label="Greyscale" />
       </v-card-text>
     </v-card>
@@ -97,6 +118,7 @@ export default {
 
   data: () => ({
     menu: false,
+    showWH: false,
     min: 0.0,
     max: 1.0,
     step: 0.05,
@@ -116,6 +138,7 @@ export default {
 
     updateParams() {
       this.menu = false
+      this.showWH = false
       this.$emit('update:params', this.params)
     },
   },
