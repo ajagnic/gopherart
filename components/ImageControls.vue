@@ -25,25 +25,9 @@
         <v-text-field
           v-model.number="params.iterations"
           suffix="iterations"
-          hint="High iterations may slow down your browser"
+          hint="High iterations will take longer to process"
           outlined
         />
-        <!-- <v-row>
-          <v-col>
-            <v-text-field
-              v-model.number="params.width"
-              prefix="Width:"
-              outlined
-            />
-          </v-col>
-          <v-col>
-            <v-text-field
-              v-model.number="params.height"
-              prefix="Height:"
-              outlined
-            />
-          </v-col>
-        </v-row> -->
         <v-range-slider
           label="Sides"
           thumb-label
