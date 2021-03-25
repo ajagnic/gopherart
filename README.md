@@ -1,5 +1,15 @@
 # gopherart
 
+### A web interface for interacting with my [gogenart](https://github.com/ajagnic/gogenart) project.
+
+## Technologies
+- [Nuxt.js](https://nuxtjs.org/)
+- [Vue.js](https://vuejs.org/) + [Vuetify](https://next.vuetifyjs.com/en/)
+- [Go](https://golang.org/)
+- [WebAssembly](https://webassembly.org/)
+
+## Domain: https://ajagnic.github.io/gopherart/
+
 ## Build Setup
 
 ```bash
@@ -18,3 +28,6 @@ $ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+# Authors
+Adrian Agnic [ [Github](https://github.com/ajagnic) ]
