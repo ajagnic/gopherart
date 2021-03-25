@@ -20,12 +20,12 @@
         <v-icon>mdi-tune</v-icon>
       </v-btn>
     </template>
-    <v-card max-width="300" @mouseleave="updateParams">
+    <v-card max-width="300" color="#333333" @mouseleave="updateParams">
       <v-card-text>
         <v-text-field
           v-model.number="params.iterations"
           suffix="iterations"
-          hint="High iterations will take longer to process"
+          hint="High iteration will take longer to process"
           outlined
         />
         <v-range-slider
