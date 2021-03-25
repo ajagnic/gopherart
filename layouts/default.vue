@@ -17,7 +17,6 @@
 <style scoped>
 .v-main {
   background-image: url('~assets/background.jpeg');
-  height: 100%;
-  width: 100vw;
+  background-size: cover;
 }
 </style>
