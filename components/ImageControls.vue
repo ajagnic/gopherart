@@ -28,65 +28,144 @@
           hint="High iteration will take longer to process"
           outlined
         />
-        <v-range-slider
-          label="Sides"
-          thumb-label
-          min="2"
-          max="20"
-          :value="sides"
-          @change="setPolygonSides"
-        />
-        <v-slider
-          v-model="params.polygonFillChance"
-          label="Fill"
-          :min="min"
-          :max="max"
-          :step="step"
-        />
-        <v-slider
-          v-model="params.polygonColorChance"
-          label="Color"
-          :min="min"
-          :max="max"
-          :step="step"
-        />
-        <v-slider
-          v-model="params.polygonSizeRatio"
-          label="Size"
-          min="0.01"
-          :max="max"
-          :step="step"
-        />
-        <v-slider
-          v-model="params.pixelShake"
-          label="Shake"
-          :min="min"
-          :max="max"
-          :step="step"
-        />
-        <v-btn v-if="!showWH" block @click="showWH = true">
-          Set Width/Height
-        </v-btn>
+        <div v-if="!showValues">
+          <v-range-slider
+            label="Sides"
+            thumb-label
+            min="2"
+            max="20"
+            :value="sides"
+            @change="setPolygonSides"
+          />
+          <v-slider
+            v-model="params.polygonFill"
+            label="Fill"
+            :min="min"
+            :max="max"
+            :step="step"
+          />
+          <v-slider
+            v-model="params.polygonColor"
+            label="Color"
+            :min="min"
+            :max="max"
+            :step="step"
+          />
+          <v-slider
+            v-model="params.polygonSizeRatio"
+            label="Size"
+            min="0.01"
+            :max="max"
+            :step="step"
+          />
+          <v-slider
+            v-model="params.pixelShake"
+            label="Shake"
+            :min="min"
+            :max="max"
+            :step="step"
+          />
+          <v-slider
+            v-model="params.pixelSpin"
+            label="Spin"
+            min="0"
+            max="360"
+            step="10"
+          />
+        </div>
         <div v-else>
           <v-row>
             <v-col>
               <v-text-field
-                v-model.number="params.width"
-                prefix="Width:"
+                v-model.number="params.polygonSidesMin"
+                dense
+                label="Min Sides"
                 outlined
               />
             </v-col>
             <v-col>
               <v-text-field
-                v-model.number="params.height"
-                prefix="Height:"
+                v-model.number="params.polygonSidesMax"
+                dense
+                label="Max Sides"
+                outlined
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model.number="params.polygonFill"
+                dense
+                label="Fill"
+                outlined
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model.number="params.polygonColor"
+                dense
+                label="Color"
+                outlined
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model.number="params.newWidth"
+                label="Width"
+                dense
+                outlined
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model.number="params.newHeight"
+                label="Height"
+                dense
+                outlined
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model.number="params.polygonSizeRatio"
+                dense
+                label="Size"
+                outlined
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model.number="params.pixelShake"
+                dense
+                label="Shake"
+                outlined
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model.number="params.pixelSpin"
+                dense
+                label="Spin"
                 outlined
               />
             </v-col>
           </v-row>
         </div>
-        <v-switch v-model="params.greyscale" label="Greyscale" />
+        <v-row justify="space-around">
+          <v-switch v-model="params.greyscale" label="Greyscale" />
+          <v-switch v-model="params.invertScaling" label="Invert Scaling" />
+        </v-row>
       </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn icon @click="showAdvanced">
+          <v-icon>{{ advIcon }}</v-icon>
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-menu>
 </template>
@@ -102,7 +181,8 @@ export default {
 
   data: () => ({
     menu: false,
-    showWH: false,
+    showValues: false,
+    advIcon: 'mdi-cog',
     min: 0.0,
     max: 1.0,
     step: 0.05,
@@ -122,9 +202,24 @@ export default {
 
     updateParams() {
       this.menu = false
-      this.showWH = false
       this.$emit('update:params', this.params)
+    },
+
+    showAdvanced() {
+      if (!this.showValues) {
+        this.showValues = true
+        this.advIcon = 'mdi-cog-off'
+      } else {
+        this.showValues = false
+        this.advIcon = 'mdi-cog'
+      }
     },
   },
 }
 </script>
+
+<style scoped>
+.row {
+  margin-bottom: -20px;
+}
+</style>

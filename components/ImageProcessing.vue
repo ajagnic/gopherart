@@ -86,15 +86,17 @@ export default {
     loading: false,
     params: {
       iterations: 10000,
-      width: 0,
-      height: 0,
       polygonSidesMin: 3,
       polygonSidesMax: 5,
-      polygonFillChance: 1.0,
-      polygonColorChance: 0.0,
+      polygonFill: 1.0,
+      polygonColor: 0.0,
       polygonSizeRatio: 0.1,
       pixelShake: 0.0,
+      pixelSpin: 0,
+      newWidth: 0,
+      newHeight: 0,
       greyscale: false,
+      invertScaling: false,
     },
   }),
 
@@ -141,7 +143,7 @@ div.image {
 }
 
 .top-fab {
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 #close-btn {
