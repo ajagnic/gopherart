@@ -4,9 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"image"
-	"image/jpeg"
-	"image/png"
 	"syscall/js"
 
 	"github.com/ajagnic/gogenart/sketch"
@@ -33,22 +30,21 @@ func processImage(this js.Value, args []js.Value) interface{} {
 	js.CopyBytesToGo(buff, b)
 	rdr := bytes.NewBuffer(buff)
 
-	img, enc, err := image.Decode(rdr)
-	if err != nil {
-		fmt.Println(err)
-	}
+	img, enc := sketch.Source(rdr)
 
 	canvas := sketch.NewSketch(img, params)
-	canvas.Draw()
+	for i := 0; i < params.Iterations; i++ {
+		if i%1000 == 0 {
+			p := float64(i) / float64(params.Iterations) * 100
+			js.Global().Call("updateProgress", p)
+		}
+		canvas.DrawOnce()
+	}
+
 	newImg := canvas.Image()
 
 	rdr.Reset()
-	switch enc {
-	case "png":
-		png.Encode(rdr, newImg)
-	default:
-		jpeg.Encode(rdr, newImg, nil)
-	}
+	sketch.Encode(rdr, newImg, enc)
 
 	out, err := json.Marshal(rdr.Bytes())
 	if err != nil {

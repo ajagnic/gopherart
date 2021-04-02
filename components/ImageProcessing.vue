@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-progress-linear :active="loading" rounded indeterminate />
+    <v-progress-linear v-model="progress" :active="loading" rounded />
     <v-card>
       <div v-if="dataURL == null">
         <v-card-title>Generate Image</v-card-title>
@@ -84,23 +84,26 @@ export default {
     enc: null,
     worker: null,
     loading: false,
+    progress: 0,
     params: {
       iterations: 10000,
-      width: 0,
-      height: 0,
       polygonSidesMin: 3,
       polygonSidesMax: 5,
-      polygonFillChance: 1.0,
-      polygonColorChance: 0.0,
+      polygonFill: 1.0,
+      polygonColor: 0.0,
       polygonSizeRatio: 0.1,
       pixelShake: 0.0,
+      pixelSpin: 0,
+      newWidth: 0,
+      newHeight: 0,
       greyscale: false,
+      invertScaling: false,
     },
   }),
 
   mounted() {
     this.worker = new Worker('js/go_worker.js')
-    this.worker.addEventListener('message', this.receiveImage)
+    this.worker.addEventListener('message', this.receiveMessage)
   },
 
   methods: {
@@ -116,10 +119,16 @@ export default {
       })
     },
 
-    receiveImage(e) {
-      this.loading = false
-      this.dataURL = 'data:' + this.enc + ';base64,' + JSON.parse(e.data)
-      this.$emit('image-loaded', true)
+    receiveMessage(e) {
+      const msg = e.data
+      if (msg.type === 'progress') {
+        this.progress = msg.value
+      } else {
+        this.loading = false
+        this.progress = 0
+        this.dataURL = 'data:' + this.enc + ';base64,' + JSON.parse(msg.value)
+        this.$emit('image-loaded', true)
+      }
     },
 
     closeProcessing() {
@@ -141,7 +150,7 @@ div.image {
 }
 
 .top-fab {
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 #close-btn {
