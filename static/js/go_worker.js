@@ -14,8 +14,12 @@ WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject).then(
   }
 )
 
+global.updateProgress = function (val) {
+  self.postMessage({ type: 'progress', value: val })
+}
+
 self.onmessage = function (e) {
   const img = e.data
   const img64 = global.processImage(img.b, img.len, img.opt)
-  self.postMessage(img64)
+  self.postMessage({ type: 'image', value: img64 })
 }

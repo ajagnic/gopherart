@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-progress-linear :active="loading" rounded indeterminate />
+    <v-progress-linear v-model="progress" :active="loading" rounded />
     <v-card>
       <div v-if="dataURL == null">
         <v-card-title>Generate Image</v-card-title>
@@ -84,6 +84,7 @@ export default {
     enc: null,
     worker: null,
     loading: false,
+    progress: 0,
     params: {
       iterations: 10000,
       polygonSidesMin: 3,
@@ -102,7 +103,7 @@ export default {
 
   mounted() {
     this.worker = new Worker('js/go_worker.js')
-    this.worker.addEventListener('message', this.receiveImage)
+    this.worker.addEventListener('message', this.receiveMessage)
   },
 
   methods: {
@@ -118,10 +119,16 @@ export default {
       })
     },
 
-    receiveImage(e) {
-      this.loading = false
-      this.dataURL = 'data:' + this.enc + ';base64,' + JSON.parse(e.data)
-      this.$emit('image-loaded', true)
+    receiveMessage(e) {
+      const msg = e.data
+      if (msg.type === 'progress') {
+        this.progress = msg.value
+      } else {
+        this.loading = false
+        this.progress = 0
+        this.dataURL = 'data:' + this.enc + ';base64,' + JSON.parse(msg.value)
+        this.$emit('image-loaded', true)
+      }
     },
 
     closeProcessing() {

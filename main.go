@@ -32,7 +32,16 @@ func processImage(this js.Value, args []js.Value) interface{} {
 
 	img, enc := sketch.Source(rdr)
 
-	newImg := sketch.NewSketch(img, params).Draw()
+	canvas := sketch.NewSketch(img, params)
+	for i := 0; i < params.Iterations; i++ {
+		if i%1000 == 0 {
+			p := float64(i) / float64(params.Iterations) * 100
+			js.Global().Call("updateProgress", p)
+		}
+		canvas.DrawOnce()
+	}
+
+	newImg := canvas.Image()
 
 	rdr.Reset()
 	sketch.Encode(rdr, newImg, enc)
