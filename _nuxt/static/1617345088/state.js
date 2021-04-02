@@ -1,0 +1,1 @@
+window.__NUXT__=(function(a){return {staticAssetsBase:"\u002Fgopherart\u002F_nuxt\u002Fstatic\u002F1617345088",layout:"default",error:a,serverRendered:true,routePath:"\u002F",config:{app:{basePath:"\u002Fgopherart\u002F",assetsPath:"\u002Fgopherart\u002F_nuxt\u002F",cdnURL:a}}}}(null));
